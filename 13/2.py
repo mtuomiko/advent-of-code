@@ -19,7 +19,7 @@ for i in range(len(buses)):
         conditions.append((i, bus))
 
 # Brute force using increasing step
-# Chinese remainder theorem could somehow be used for numerical solving
+# Chinese remainder theorem could somehow be used for non-numerical solving?
 step = 1
 t = 0
 
