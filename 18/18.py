@@ -1,5 +1,4 @@
 from string import digits
-from collections import deque
 
 FILENAME = 'input.txt'
 
