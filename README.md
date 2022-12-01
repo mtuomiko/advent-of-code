@@ -1,4 +1,3 @@
-# Advent of Code 2020
+# Advent of Code
 
-AoC code challenge. [Link](https://adventofcode.com/)
-
+Root repository for Advent of Code challenges. [Link](https://adventofcode.com/)
