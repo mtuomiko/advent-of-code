@@ -1,0 +1,5 @@
+# Repo will have LF line endings by default
+* text=auto
+
+# Don't touch gradlew script, can break
+gradlew text eol=lf
