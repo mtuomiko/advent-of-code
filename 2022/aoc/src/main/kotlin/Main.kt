@@ -2,7 +2,9 @@ import java.io.File
 
 val availableSolvers = mapOf(
     "01a" to ::solver01a,
-    "01b" to ::solver01b
+    "01b" to ::solver01b,
+    "02a" to ::solver02a,
+    "02b" to ::solver02b,
 )
 
 const val resourcesPath = "src/main/resources/"
