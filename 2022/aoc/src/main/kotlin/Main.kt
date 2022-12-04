@@ -7,6 +7,8 @@ val availableSolvers = mapOf(
     "02b" to ::solver02b,
     "03a" to ::solver03a,
     "03b" to ::solver03b,
+    "04a" to ::solver04a,
+    "04b" to ::solver04b,
 )
 
 const val resourcesPath = "src/main/resources/"
