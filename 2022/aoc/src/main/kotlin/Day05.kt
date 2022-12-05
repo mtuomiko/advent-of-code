@@ -10,7 +10,6 @@ private fun splitLinesOnFirstEmptyLine(lines: List<String>): Pair<List<String>, 
     throw Exception("Separating empty line not found")
 }
 
-// ArrayDeque probably not even useful for the stacks, we're not adding to the beginning at any point
 private fun parseStackLines(lines: List<String>): List<ArrayDeque<Char>> {
     val stackCount = lines.last().trim().split(Regex(" +")).size // greedy matching to handle 'long' spaces
     val deques = List(stackCount) { ArrayDeque<Char>() }
@@ -29,59 +28,58 @@ private fun parseStackLines(lines: List<String>): List<ArrayDeque<Char>> {
     return deques
 }
 
-private fun parseOperation(line: String): Operation {
+private fun <T> parseOperation(line: String, stacks: List<ArrayDeque<T>>): MoveOperation<T> {
     val integerValues = line.split(' ').slice(setOf(1, 3, 5)).map { it.toInt() }
-    return Operation(integerValues[0], integerValues[1], integerValues[2])
+    return MoveOperation(
+        count = integerValues[0],
+        from = stacks[integerValues[1] - 1], // stack numbering in input uses 1-based indexes
+        to = stacks[integerValues[2] - 1]
+    )
 }
 
-private class Operation(val count: Int, val from: Int, val to: Int)
+private class MoveOperation<T>(val count: Int, val from: ArrayDeque<T>, val to: ArrayDeque<T>)
 
 private fun <T> processOperationLines(
     lines: List<String>,
     stacks: List<ArrayDeque<T>>,
-    block: (operation: Operation, stacks: List<ArrayDeque<T>>) -> Unit
+    block: (operation: MoveOperation<T>) -> Unit
 ) {
     lines.forEach {
-        val operation = parseOperation(it)
-        block(operation, stacks)
+        val operation = parseOperation(it, stacks)
+        block(operation)
     }
 }
 
-fun solver05a(inputFile: File) {
-    fun <T> sequentialMovement(operation: Operation, stacks: List<ArrayDeque<T>>) {
-        with(operation) {
-            repeat(count) {
-                val box = stacks[from - 1].removeLast()
-                stacks[to - 1].addLast(box)
-            }
-        }
-    }
-
+private fun commonSolver(inputFile: File, block: (operation: MoveOperation<Char>) -> Unit) {
     val lines = inputFile.readLines() // I'm just gonna read the whole thing instead of any sequential approach
     val (stackLines, operationLines) = splitLinesOnFirstEmptyLine(lines)
     val stacks = parseStackLines(stackLines)
 
-    processOperationLines(operationLines, stacks, ::sequentialMovement)
+    processOperationLines(operationLines, stacks, block)
 
     stacks.forEach { print(it.last()) }
 }
 
-fun solver05b(inputFile: File) {
-    fun <T> stackMovement(operation: Operation, stacks: List<ArrayDeque<T>>) {
+fun solver05a(inputFile: File) {
+    fun <T> sequentialMove(operation: MoveOperation<T>) {
         with(operation) {
-            val topStack = ArrayDeque<T>()
-            repeat(count) {
-                topStack.addFirst(stacks[from - 1].removeLast()) // addFirst so the order isn't reversed
-            }
-            stacks[to - 1].addAll(topStack)
+            repeat(count) { to.addLast(from.removeLast()) }
         }
     }
 
-    val lines = inputFile.readLines()
-    val (stackLines, operationLines) = splitLinesOnFirstEmptyLine(lines)
-    val stacks = parseStackLines(stackLines)
+    commonSolver(inputFile, ::sequentialMove)
+}
 
-    processOperationLines(operationLines, stacks, ::stackMovement)
+fun solver05b(inputFile: File) {
+    fun <T> stackMove(operation: MoveOperation<T>) {
+        with(operation) {
+            val topStack = ArrayDeque<T>()
+            repeat(count) {
+                topStack.addFirst(from.removeLast()) // addFirst so the order isn't reversed
+            }
+            to.addAll(topStack)
+        }
+    }
 
-    stacks.forEach { print(it.last()) }
+    commonSolver(inputFile, ::stackMove)
 }
