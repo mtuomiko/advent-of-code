@@ -1,6 +1,6 @@
 import java.io.File
 
-fun lineToAssignmentPair(line: String): Pair<IntRange, IntRange> {
+private fun lineToAssignmentPair(line: String): Pair<IntRange, IntRange> {
     val splitPair = line.split(',').map { assignmentString ->
         assignmentString.split('-').map { sectionIdString -> sectionIdString.toInt() }
     }

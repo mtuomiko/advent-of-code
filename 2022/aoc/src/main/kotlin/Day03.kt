@@ -1,7 +1,7 @@
 import java.io.File
 import java.lang.RuntimeException
 
-fun getPriority(item: Char): Int {
+private fun getPriority(item: Char): Int {
     val offset = if (item.isUpperCase()) {
         38 // For example, 'A' has ASCII value of 65 and challenge priority is 27. 65 - 38 = 27
     } else {
