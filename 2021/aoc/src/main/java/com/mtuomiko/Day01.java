@@ -9,7 +9,7 @@ public final class Day01 {
     private Day01() {
     }
 
-    public static void solver01a(Path input) {
+    public static void solverA(Path input) {
         var count = 0;
         try (var reader = Files.newBufferedReader(input)) {
             Integer previous = null;
@@ -31,7 +31,7 @@ public final class Day01 {
         System.out.println("increasing count " + count);
     }
 
-    public static void solver01b(Path input) {
+    public static void solverB(Path input) {
         var windowSize = 3;
         var count = 0;
         try (var reader = Files.newBufferedReader(input)) {

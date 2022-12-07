@@ -1,5 +1,7 @@
 package com.mtuomiko;
 
+import com.mtuomiko.day02.Day02;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -7,7 +9,8 @@ import java.util.function.Consumer;
 
 public class Main {
     private static Map<String, Consumer<Path>> availableSolvers = Map.ofEntries(
-            Map.entry("01a", Day01::solver01a), Map.entry("01b", Day01::solver01b)
+            Map.entry("01a", Day01::solverA), Map.entry("01b", Day01::solverB),
+            Map.entry("02a", Day02::solverA), Map.entry("02b", Day02::solverB)
     );
 
     private static String resourcesPath = "src/main/resources/";
