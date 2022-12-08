@@ -16,6 +16,9 @@ class DirNode(
 
 class FileNode(parent: DirNode?, name: String, val size: Int) : Node(parent, name)
 
+/**
+ * Container for the filesystem tree structure. Doesn't consider the size of nodes.
+ */
 class Parser {
     val root: DirNode = DirNode(null, "")
     private lateinit var currentDir: DirNode // input needs to start from root, will practically never be null
@@ -70,15 +73,18 @@ class Parser {
     }
 }
 
-private fun recursiveDirSizeSearch(dirSizeList: MutableList<Long>, currentNode: Node, maxLimit: Int? = null): Long {
+/**
+ * Calculates size of [currentNode]. Directory node size is the sum of nested node sizes. While recursing, all found
+ * directory sizes equal to or under [maxLimit] are added to [dirSizeList]. If [maxLimit] is `null`, all directory sizes
+ * are added to the list.
+ */
+private fun recursiveSizeSearch(dirSizeList: MutableList<Long>, currentNode: Node, maxLimit: Int? = null): Long {
     if (currentNode is FileNode) return currentNode.size.toLong()
 
     val size = (currentNode as DirNode).nodes.values.fold(0L) { sum, node ->
-        sum + recursiveDirSizeSearch(dirSizeList, node, maxLimit)
+        sum + recursiveSizeSearch(dirSizeList, node, maxLimit)
     }
-    if (maxLimit == null) {
-        dirSizeList.add(size)
-    } else if (size <= maxLimit) {
+    if (maxLimit == null || size <= maxLimit) {
         dirSizeList.add(size)
     }
 
@@ -91,7 +97,7 @@ fun solver07a(inputFile: File) {
     inputFile.forEachLine { parser.processLine(it) }
 
     val dirSizeList = mutableListOf<Long>()
-    recursiveDirSizeSearch(dirSizeList, parser.root, dirMaxSizeLimit)
+    recursiveSizeSearch(dirSizeList, parser.root, dirMaxSizeLimit)
     val result = dirSizeList.filter { it <= dirMaxSizeLimit }.fold(0L) { sum, dirSize -> sum + dirSize }
 
     println("Sum of dir sizes at most $dirMaxSizeLimit is $result")
@@ -106,7 +112,7 @@ fun solver07b(inputFile: File) {
     inputFile.forEachLine { parser.processLine(it) }
 
     val dirSizeList = mutableListOf<Long>()
-    val usage = recursiveDirSizeSearch(dirSizeList, parser.root)
+    val usage = recursiveSizeSearch(dirSizeList, parser.root)
     val minimumToDelete = usage - maxUsageAllowed
 
     val result = dirSizeList.filter { it >= minimumToDelete }.minOf { it }

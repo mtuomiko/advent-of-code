@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test
 
 private class MainTest {
-    private val challengeCount = 7
+    private val challengeCount = 8
     private val letters = listOf("a", "b")
     private val paddingTemplate = "%02d"
     private val inputSubfix = "_input.txt"

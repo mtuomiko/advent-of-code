@@ -58,6 +58,7 @@ private fun commonSolver(inputFile: File, block: (operation: MoveOperation<Char>
     processOperationLines(operationLines, stacks, block)
 
     stacks.forEach { print(it.last()) }
+    println()
 }
 
 fun solver05a(inputFile: File) {
