@@ -1,3 +1,5 @@
+package com.mtuomiko
+
 import java.io.File
 
 const val COMMAND_PREFIX = "$"

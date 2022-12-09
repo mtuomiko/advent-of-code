@@ -1,3 +1,5 @@
+package com.mtuomiko
+
 import java.io.File
 
 private fun lineToAssignmentPair(line: String): Pair<IntRange, IntRange> {

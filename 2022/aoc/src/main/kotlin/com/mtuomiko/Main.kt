@@ -1,3 +1,7 @@
+package com.mtuomiko
+
+import com.mtuomiko.day09.solver09a
+import com.mtuomiko.day09.solver09b
 import java.io.File
 
 val availableSolvers = mapOf(
@@ -9,6 +13,7 @@ val availableSolvers = mapOf(
     "06a" to ::solver06a, "06b" to ::solver06b,
     "07a" to ::solver07a, "07b" to ::solver07b,
     "08a" to ::solver08a, "08b" to ::solver08b,
+    "09a" to ::solver09a, "09b" to ::solver09b,
 )
 
 const val resourcesPath = "src/main/resources/"

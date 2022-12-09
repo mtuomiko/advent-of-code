@@ -1,3 +1,5 @@
+package com.mtuomiko
+
 import java.io.File
 
 private fun splitLinesOnFirstEmptyLine(lines: List<String>): Pair<List<String>, List<String>> {

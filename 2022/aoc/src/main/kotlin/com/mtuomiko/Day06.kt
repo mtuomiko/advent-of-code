@@ -1,3 +1,5 @@
+package com.mtuomiko
+
 import java.io.File
 
 // No polling so it's an interesting 'buffer' :P

@@ -1,3 +1,5 @@
+package com.mtuomiko
+
 import java.io.File
 
 enum class Result(val score: Int) {
