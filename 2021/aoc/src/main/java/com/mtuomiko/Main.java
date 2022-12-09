@@ -10,7 +10,8 @@ import java.util.function.Consumer;
 public class Main {
     private static Map<String, Consumer<Path>> availableSolvers = Map.ofEntries(
             Map.entry("01a", Day01::solverA), Map.entry("01b", Day01::solverB),
-            Map.entry("02a", Day02::solverA), Map.entry("02b", Day02::solverB)
+            Map.entry("02a", Day02::solverA), Map.entry("02b", Day02::solverB),
+            Map.entry("03a", Day03::solverA), Map.entry("03b", Day03::solverB)
     );
 
     private static String resourcesPath = "src/main/resources/";
