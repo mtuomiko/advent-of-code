@@ -20,7 +20,7 @@ private class SpecializedUniqueIntBuffer(size: Int) {
     }
 }
 
-private fun commonSolver(inputFile: File, size: Int) {
+private fun commonSolver(inputFile: File, size: Int): Int {
     val buffer = SpecializedUniqueIntBuffer(size)
     val reader = inputFile.bufferedReader()
 
@@ -38,16 +38,17 @@ private fun commonSolver(inputFile: File, size: Int) {
     }
 
     if (index == -1) {
-        println("No unique marker of size $size encountered")
-    } else {
-        println("First unique marker of size $size found at character ${index + 1}")
+        throw Exception("No unique marker of size $size encountered")
     }
+    val result = index + 1
+    println("First unique marker of size $size found at character $result")
+    return result
 }
 
-fun solver06a(inputFile: File) {
-    commonSolver(inputFile, 4)
+fun solver06a(inputFile: File): Int {
+    return commonSolver(inputFile, 4)
 }
 
-fun solver06b(inputFile: File) {
-    commonSolver(inputFile, 14)
+fun solver06b(inputFile: File): Int {
+    return commonSolver(inputFile, 14)
 }

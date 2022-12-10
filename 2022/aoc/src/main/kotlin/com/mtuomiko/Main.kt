@@ -22,9 +22,12 @@ fun main(args: Array<String>) {
     if (args.size != 2) {
         throw Exception("give solver and input as arguments")
     }
-    val file = File(resourcesPath + args[1])
+    val solverString = args[0]
+    val inputFilename = args[1]
+    val file = File(resourcesPath + inputFilename)
 
-    val solver = availableSolvers[args[0]] ?: throw Exception("give valid solver")
+    val solver = availableSolvers[solverString] ?: throw Exception("give valid solver")
 
-    solver(file)
+    val result = solver(file)
+    println("Solver $solverString: $result")
 }

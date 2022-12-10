@@ -52,28 +52,29 @@ private fun <T> processOperationLines(
     }
 }
 
-private fun commonSolver(inputFile: File, block: (operation: MoveOperation<Char>) -> Unit) {
+private fun commonSolver(inputFile: File, block: (operation: MoveOperation<Char>) -> Unit): String {
     val lines = inputFile.readLines() // I'm just gonna read the whole thing instead of any sequential approach
     val (stackLines, operationLines) = splitLinesOnFirstEmptyLine(lines)
     val stacks = parseStackLines(stackLines)
 
     processOperationLines(operationLines, stacks, block)
 
-    stacks.forEach { print(it.last()) }
-    println()
+    return stacks.map { it.last() }.joinToString("")
 }
 
-fun solver05a(inputFile: File) {
+fun solver05a(inputFile: File): String {
     fun <T> sequentialMove(operation: MoveOperation<T>) {
         with(operation) {
             repeat(count) { to.addLast(from.removeLast()) }
         }
     }
 
-    commonSolver(inputFile, ::sequentialMove)
+    val result = commonSolver(inputFile, ::sequentialMove)
+    println(result)
+    return result
 }
 
-fun solver05b(inputFile: File) {
+fun solver05b(inputFile: File): String {
     fun <T> stackMove(operation: MoveOperation<T>) {
         with(operation) {
             val topStack = ArrayDeque<T>()
@@ -84,5 +85,7 @@ fun solver05b(inputFile: File) {
         }
     }
 
-    commonSolver(inputFile, ::stackMove)
+    val result = commonSolver(inputFile, ::stackMove)
+    println(result)
+    return result
 }

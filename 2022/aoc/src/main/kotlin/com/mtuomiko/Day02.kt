@@ -29,7 +29,7 @@ val evaluation = mapOf(
     Item.SCISSORS to mapOf(Item.ROCK to Result.LOSS, Item.PAPER to Result.WIN, Item.SCISSORS to Result.DRAW),
 )
 
-fun solver02a(inputFile: File) {
+fun solver02a(inputFile: File): Int {
     var score = 0
 
     inputFile.forEachLine { line ->
@@ -43,6 +43,7 @@ fun solver02a(inputFile: File) {
     }
 
     println(score)
+    return score
 }
 
 val tokenToResultMap = mapOf(
@@ -57,7 +58,7 @@ val evaluationForItem = mapOf(
     Result.WIN to mapOf(Item.ROCK to Item.PAPER, Item.PAPER to Item.SCISSORS, Item.SCISSORS to Item.ROCK),
 )
 
-fun solver02b(inputFile: File) {
+fun solver02b(inputFile: File): Int {
 
     var score = 0
 
@@ -73,4 +74,5 @@ fun solver02b(inputFile: File) {
     }
 
     println(score)
+    return score
 }

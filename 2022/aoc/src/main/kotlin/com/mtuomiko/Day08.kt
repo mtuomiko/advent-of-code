@@ -3,7 +3,7 @@ package com.mtuomiko
 import java.io.File
 import kotlin.math.max
 
-fun solver08a(inputFile: File) {
+fun solver08a(inputFile: File): Int {
     fun markVisibleHorizontally(visibilityGrid: Array<BooleanArray>, lines: List<String>) {
         lines.forEachIndexed { y, line ->
             var maximum = -1
@@ -72,6 +72,7 @@ fun solver08a(inputFile: File) {
         }
     }
     println("Visible trees $visibleCount")
+    return visibleCount
 }
 
 enum class Direction(val yDelta: Int, val xDelta: Int) {
@@ -147,7 +148,7 @@ class ScenicScoreSolver(private val lines: List<String>) {
 }
 
 // Naive solution, will repeatedly check same elements.
-fun solver08b(inputFile: File) {
+fun solver08b(inputFile: File): Long {
     val lines = inputFile.readLines()
 
     val solver = ScenicScoreSolver(lines)
@@ -155,4 +156,5 @@ fun solver08b(inputFile: File) {
     val result = solver.getMaximumScenicScore()
 
     println("Maximum scenic score is $result")
+    return result
 }

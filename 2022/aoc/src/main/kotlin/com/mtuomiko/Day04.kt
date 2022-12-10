@@ -12,7 +12,7 @@ private fun lineToAssignmentPair(line: String): Pair<IntRange, IntRange> {
     )
 }
 
-fun solver04a(inputFile: File) {
+fun solver04a(inputFile: File): Int {
     fun eitherContainsOther(first: IntRange, second: IntRange): Boolean {
         if (first.first <= second.first && first.last >= second.last) return true // first contains second
         if (first.first >= second.first && first.last <= second.last) return true // second contains first
@@ -28,9 +28,10 @@ fun solver04a(inputFile: File) {
     }
 
     println("One assignment contained in other $completeOverlapCount times")
+    return completeOverlapCount
 }
 
-fun solver04b(inputFile: File) {
+fun solver04b(inputFile: File): Int {
     fun overlapExists(first: IntRange, second: IntRange): Boolean {
         if (first.first > second.last || second.first > first.last) {
             return false // either starts after other's end, cannot overlap
@@ -47,4 +48,5 @@ fun solver04b(inputFile: File) {
     }
 
     println("Assignments overlap $overlapCount times")
+    return overlapCount
 }

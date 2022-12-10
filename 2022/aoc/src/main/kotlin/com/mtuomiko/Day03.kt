@@ -12,7 +12,7 @@ private fun getPriority(item: Char): Int {
     return item.code - offset
 }
 
-fun solver03a(inputFile: File) {
+fun solver03a(inputFile: File): Int {
     fun getDuplicateItem(first: Set<Char>, second: String): Char {
         second.forEach { if (first.contains(it)) return it }
         throw RuntimeException("Duplicate char not found")
@@ -32,9 +32,10 @@ fun solver03a(inputFile: File) {
     }
 
     println("Priority sum $sum")
+    return sum
 }
 
-fun solver03b(inputFile: File) {
+fun solver03b(inputFile: File): Int {
     var sum = 0
 
     inputFile.bufferedReader().lineSequence().chunked(3).forEach { group ->
@@ -47,4 +48,5 @@ fun solver03b(inputFile: File) {
     }
 
     println("Grouped priority sum $sum")
+    return sum
 }

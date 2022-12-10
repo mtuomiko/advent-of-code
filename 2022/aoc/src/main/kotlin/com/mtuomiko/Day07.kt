@@ -93,7 +93,7 @@ private fun recursiveSizeSearch(dirSizeList: MutableList<Long>, currentNode: Nod
     return size
 }
 
-fun solver07a(inputFile: File) {
+fun solver07a(inputFile: File): Long {
     val dirMaxSizeLimit = 100000
     val parser = Parser()
     inputFile.forEachLine { parser.processLine(it) }
@@ -103,9 +103,10 @@ fun solver07a(inputFile: File) {
     val result = dirSizeList.filter { it <= dirMaxSizeLimit }.fold(0L) { sum, dirSize -> sum + dirSize }
 
     println("Sum of dir sizes at most $dirMaxSizeLimit is $result")
+    return result
 }
 
-fun solver07b(inputFile: File) {
+fun solver07b(inputFile: File): Long {
     val total = 70000000
     val needed = 30000000
     val maxUsageAllowed = total - needed
@@ -120,5 +121,5 @@ fun solver07b(inputFile: File) {
     val result = dirSizeList.filter { it >= minimumToDelete }.minOf { it }
 
     println("Smallest single dir that will free at least $minimumToDelete space, has the size of $result")
-
+    return result
 }

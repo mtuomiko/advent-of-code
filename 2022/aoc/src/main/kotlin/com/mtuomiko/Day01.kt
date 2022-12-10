@@ -3,7 +3,7 @@ package com.mtuomiko
 import java.io.File
 import java.util.*
 
-fun solver01a(inputFile: File) {
+fun solver01a(inputFile: File): Int {
     var maxElfCalories = 0
     var currentElfCalories = 0
 
@@ -24,9 +24,10 @@ fun solver01a(inputFile: File) {
     }
 
     println("Maximum calories: $maxElfCalories")
+    return maxElfCalories
 }
 
-fun solver01b(inputFile: File) {
+fun solver01b(inputFile: File): Long {
     val queue = SizedMinMaxPriorityQueue(3)
     var currentElfCalories = 0
 
@@ -44,14 +45,18 @@ fun solver01b(inputFile: File) {
     val total = queue.total()
 
     println("Total calories for top ${queue.size()} elfs: $total")
+    return total
 }
 
 /**
- * Ordered as a min priority queue, retains only the maximum elements
+ * Ordered as a min priority queue, retains only the maximum elements once the queue fills up.
  */
 class SizedMinMaxPriorityQueue(private val maxSize: Int) {
     private val pq = PriorityQueue<Int>(maxSize)
 
+    /**
+     * Add [value] to queue if it is larger than smallest element. If queue is full, removes the smallest element.
+     */
     fun add(value: Int) {
         val currentMinimumInQueue = pq.peek()
         if (currentMinimumInQueue == null || value > currentMinimumInQueue) {
@@ -60,6 +65,9 @@ class SizedMinMaxPriorityQueue(private val maxSize: Int) {
         }
     }
 
+    /**
+     * Sum of all values in the queue.
+     */
     fun total(): Long = pq.fold(0L) { acc, value -> acc + value }
 
     fun size(): Int = pq.size

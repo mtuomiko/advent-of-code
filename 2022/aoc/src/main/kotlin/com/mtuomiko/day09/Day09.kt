@@ -58,7 +58,7 @@ class HeadTailPair {
     }
 }
 
-fun solver09a(inputFile: File) {
+fun solver09a(inputFile: File): Int {
     val pair = HeadTailPair()
     inputFile.forEachLine { line ->
         val tokens = line.split(' ')
@@ -71,8 +71,9 @@ fun solver09a(inputFile: File) {
     val result = pair.tailPositions.size
 
     println("Tail visited $result unique positions")
+    return result
 }
 
-fun solver09b(inputFile: File) {
-
+fun solver09b(inputFile: File): Int {
+    return 1
 }
