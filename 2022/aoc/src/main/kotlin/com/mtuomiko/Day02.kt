@@ -1,6 +1,6 @@
 package com.mtuomiko
 
-import java.io.File
+import java.io.Reader
 
 enum class Result(val score: Int) {
     LOSS(0),
@@ -29,10 +29,10 @@ val evaluation = mapOf(
     Item.SCISSORS to mapOf(Item.ROCK to Result.LOSS, Item.PAPER to Result.WIN, Item.SCISSORS to Result.DRAW),
 )
 
-fun solver02a(inputFile: File): Int {
+fun solver02a(input: Reader): Int {
     var score = 0
 
-    inputFile.forEachLine { line ->
+    input.forEachLine { line ->
         val tokens = line.split(' ').map { it[0] }
         val opponent = tokenToItemMap[tokens[0]]!!
         val player = tokenToItemMap[tokens[1]]!!
@@ -58,11 +58,11 @@ val evaluationForItem = mapOf(
     Result.WIN to mapOf(Item.ROCK to Item.PAPER, Item.PAPER to Item.SCISSORS, Item.SCISSORS to Item.ROCK),
 )
 
-fun solver02b(inputFile: File): Int {
+fun solver02b(input: Reader): Int {
 
     var score = 0
 
-    inputFile.forEachLine { line ->
+    input.forEachLine { line ->
         val tokens = line.split(' ').map { it[0] }
         val opponent = tokenToItemMap[tokens[0]]!!
 

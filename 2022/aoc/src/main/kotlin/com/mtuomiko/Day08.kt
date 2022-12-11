@@ -1,9 +1,9 @@
 package com.mtuomiko
 
-import java.io.File
+import java.io.Reader
 import kotlin.math.max
 
-fun solver08a(inputFile: File): Int {
+fun solver08a(input: Reader): Int {
     fun markVisibleHorizontally(visibilityGrid: Array<BooleanArray>, lines: List<String>) {
         lines.forEachIndexed { y, line ->
             var maximum = -1
@@ -56,7 +56,7 @@ fun solver08a(inputFile: File): Int {
         }
     }
 
-    val lines = inputFile.readLines()
+    val lines = input.readLines()
 
     val height = lines.size
     val width = lines[0].length
@@ -148,8 +148,8 @@ class ScenicScoreSolver(private val lines: List<String>) {
 }
 
 // Naive solution, will repeatedly check same elements.
-fun solver08b(inputFile: File): Long {
-    val lines = inputFile.readLines()
+fun solver08b(input: Reader): Long {
+    val lines = input.readLines()
 
     val solver = ScenicScoreSolver(lines)
 

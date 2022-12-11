@@ -1,6 +1,7 @@
 package com.mtuomiko.day09
 
 import java.io.File
+import java.io.Reader
 import kotlin.math.sign
 
 enum class Direction(val yDelta: Int, val xDelta: Int, val letter: Char) {
@@ -58,9 +59,9 @@ class HeadTailPair {
     }
 }
 
-fun solver09a(inputFile: File): Int {
+fun solver09a(input: Reader): Int {
     val pair = HeadTailPair()
-    inputFile.forEachLine { line ->
+    input.forEachLine { line ->
         val tokens = line.split(' ')
         val direction = Direction.values().first { it.letter == tokens[0][0] } // unnecessary looping on enum values
         val amount = tokens[1].toInt()
@@ -74,6 +75,6 @@ fun solver09a(inputFile: File): Int {
     return result
 }
 
-fun solver09b(inputFile: File): Int {
+fun solver09b(input: Reader): Int {
     return 1
 }

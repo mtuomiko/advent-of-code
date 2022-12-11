@@ -1,7 +1,7 @@
 package com.mtuomiko
 
-import java.io.File
-import java.lang.RuntimeException
+import java.io.BufferedReader
+import java.io.Reader
 
 private fun getPriority(item: Char): Int {
     val offset = if (item.isUpperCase()) {
@@ -12,7 +12,7 @@ private fun getPriority(item: Char): Int {
     return item.code - offset
 }
 
-fun solver03a(inputFile: File): Int {
+fun solver03a(input: Reader): Int {
     fun getDuplicateItem(first: Set<Char>, second: String): Char {
         second.forEach { if (first.contains(it)) return it }
         throw RuntimeException("Duplicate char not found")
@@ -20,7 +20,7 @@ fun solver03a(inputFile: File): Int {
 
     var sum = 0
 
-    inputFile.forEachLine {
+    input.forEachLine {
         val compartments = it.chunked(it.length / 2)
         val firstCompartmentUniqueItems = compartments[0].toSet()
 
@@ -35,10 +35,11 @@ fun solver03a(inputFile: File): Int {
     return sum
 }
 
-fun solver03b(inputFile: File): Int {
+fun solver03b(input: Reader): Int {
+    val bufferedReader = BufferedReader(input)
     var sum = 0
 
-    inputFile.bufferedReader().lineSequence().chunked(3).forEach { group ->
+    bufferedReader.lineSequence().chunked(3).forEach { group ->
         val itemSets = group.map { it.toSet() }
         val singleCommonChar = itemSets.reduce { common, set -> common intersect set }.first()
 

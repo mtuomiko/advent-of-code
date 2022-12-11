@@ -6,6 +6,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.File
+import java.io.FileInputStream
+import java.io.InputStreamReader
+import java.io.Reader
 import kotlin.reflect.KFunction1
 import kotlin.reflect.jvm.kotlinFunction
 
@@ -28,11 +31,11 @@ private class MainTest {
     @ParameterizedTest
     @MethodSource("solverSource")
     fun `Solvers provide the correct answer`(
-        kFunction: KFunction1<File, Any>,
-        inputFile: File,
+        kFunction: KFunction1<Reader, Any>,
+        input: Reader,
         expectedResult: Any
     ) {
-        val result = kFunction.invoke(inputFile)
+        val result = kFunction.invoke(input)
 
         assertThat(result).isEqualTo(expectedResult)
     }
@@ -72,9 +75,9 @@ private class MainTest {
          *
          * Return Arguments should be:
          * <ul>
-         * <li>solverFunction: KFunction1<File, Any> (result out, using Any since the result type varies)
-         * <li>inputFile: [File]
-         * <li>result: Any (so far one of Int, Long, String)
+         * <li>solverFunction: KFunction1<Reader, Any> (result out is using Any since the result type varies)
+         * <li>inputF: [Reader]
+         * <li>result: Any (like Int, Long, String)
          */
         @JvmStatic
         fun solverSource(): List<Arguments> {
@@ -84,7 +87,8 @@ private class MainTest {
 
                 val answerFunctionPairs = pairAnswersToKFunctions(dayAnswers, paddedNumber)
                 answerFunctionPairs.map {
-                    Triple(it.second, file, it.first)
+                    val inputReader = InputStreamReader(FileInputStream(file), Charsets.UTF_8)
+                    Triple(it.second, inputReader, it.first)
                 }
             }
             return argumentTriples.map { Arguments.of(it.first, it.second, it.third) }

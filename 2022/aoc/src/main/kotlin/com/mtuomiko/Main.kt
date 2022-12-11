@@ -3,6 +3,8 @@ package com.mtuomiko
 import com.mtuomiko.day09.solver09a
 import com.mtuomiko.day09.solver09b
 import java.io.File
+import java.io.FileInputStream
+import java.io.InputStreamReader
 
 val availableSolvers = mapOf(
     "01a" to ::solver01a, "01b" to ::solver01b,
@@ -24,10 +26,12 @@ fun main(args: Array<String>) {
     }
     val solverString = args[0]
     val inputFilename = args[1]
+
     val file = File(resourcesPath + inputFilename)
+    val inputReader = InputStreamReader(FileInputStream(file), Charsets.UTF_8)
 
     val solver = availableSolvers[solverString] ?: throw Exception("give valid solver")
 
-    val result = solver(file)
+    val result = solver(inputReader)
     println("Solver $solverString: $result")
 }

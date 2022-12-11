@@ -1,13 +1,13 @@
 package com.mtuomiko
 
-import java.io.File
+import java.io.Reader
 import java.util.*
 
-fun solver01a(inputFile: File): Int {
+fun solver01a(input: Reader): Int {
     var maxElfCalories = 0
     var currentElfCalories = 0
 
-    inputFile.forEachLine {
+    input.forEachLine {
         if (it.isNotEmpty()) {
             val calories = it.toInt()
             currentElfCalories += calories
@@ -27,11 +27,11 @@ fun solver01a(inputFile: File): Int {
     return maxElfCalories
 }
 
-fun solver01b(inputFile: File): Long {
+fun solver01b(input: Reader): Long {
     val queue = SizedMinMaxPriorityQueue(3)
     var currentElfCalories = 0
 
-    inputFile.forEachLine {
+    input.forEachLine {
         if (it.isNotEmpty()) {
             val calories = it.toInt()
             currentElfCalories += calories

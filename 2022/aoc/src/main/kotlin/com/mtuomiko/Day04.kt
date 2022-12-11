@@ -1,6 +1,6 @@
 package com.mtuomiko
 
-import java.io.File
+import java.io.Reader
 
 private fun lineToAssignmentPair(line: String): Pair<IntRange, IntRange> {
     val splitPair = line.split(',').map { assignmentString ->
@@ -12,7 +12,7 @@ private fun lineToAssignmentPair(line: String): Pair<IntRange, IntRange> {
     )
 }
 
-fun solver04a(inputFile: File): Int {
+fun solver04a(input: Reader): Int {
     fun eitherContainsOther(first: IntRange, second: IntRange): Boolean {
         if (first.first <= second.first && first.last >= second.last) return true // first contains second
         if (first.first >= second.first && first.last <= second.last) return true // second contains first
@@ -21,7 +21,7 @@ fun solver04a(inputFile: File): Int {
 
     var completeOverlapCount = 0
 
-    inputFile.forEachLine {
+    input.forEachLine {
         val pair = lineToAssignmentPair(it)
 
         if (eitherContainsOther(pair.first, pair.second)) completeOverlapCount++
@@ -31,7 +31,7 @@ fun solver04a(inputFile: File): Int {
     return completeOverlapCount
 }
 
-fun solver04b(inputFile: File): Int {
+fun solver04b(input: Reader): Int {
     fun overlapExists(first: IntRange, second: IntRange): Boolean {
         if (first.first > second.last || second.first > first.last) {
             return false // either starts after other's end, cannot overlap
@@ -41,7 +41,7 @@ fun solver04b(inputFile: File): Int {
 
     var overlapCount = 0
 
-    inputFile.forEachLine {
+    input.forEachLine {
         val pair = lineToAssignmentPair(it)
 
         if (overlapExists(pair.first, pair.second)) overlapCount++

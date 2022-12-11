@@ -1,6 +1,6 @@
 package com.mtuomiko
 
-import java.io.File
+import java.io.Reader
 
 const val COMMAND_PREFIX = "$"
 const val CHANGE_DIR = "cd"
@@ -93,10 +93,10 @@ private fun recursiveSizeSearch(dirSizeList: MutableList<Long>, currentNode: Nod
     return size
 }
 
-fun solver07a(inputFile: File): Long {
+fun solver07a(input: Reader): Long {
     val dirMaxSizeLimit = 100000
     val parser = Parser()
-    inputFile.forEachLine { parser.processLine(it) }
+    input.forEachLine { parser.processLine(it) }
 
     val dirSizeList = mutableListOf<Long>()
     recursiveSizeSearch(dirSizeList, parser.root, dirMaxSizeLimit)
@@ -106,13 +106,13 @@ fun solver07a(inputFile: File): Long {
     return result
 }
 
-fun solver07b(inputFile: File): Long {
+fun solver07b(input: Reader): Long {
     val total = 70000000
     val needed = 30000000
     val maxUsageAllowed = total - needed
 
     val parser = Parser()
-    inputFile.forEachLine { parser.processLine(it) }
+    input.forEachLine { parser.processLine(it) }
 
     val dirSizeList = mutableListOf<Long>()
     val usage = recursiveSizeSearch(dirSizeList, parser.root)

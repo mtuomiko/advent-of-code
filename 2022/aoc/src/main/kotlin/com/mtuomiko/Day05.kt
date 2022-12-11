@@ -1,6 +1,6 @@
 package com.mtuomiko
 
-import java.io.File
+import java.io.Reader
 
 private fun splitLinesOnFirstEmptyLine(lines: List<String>): Pair<List<String>, List<String>> {
     for ((index, line) in lines.withIndex()) {
@@ -52,8 +52,8 @@ private fun <T> processOperationLines(
     }
 }
 
-private fun commonSolver(inputFile: File, block: (operation: MoveOperation<Char>) -> Unit): String {
-    val lines = inputFile.readLines() // I'm just gonna read the whole thing instead of any sequential approach
+private fun commonSolver(input: Reader, block: (operation: MoveOperation<Char>) -> Unit): String {
+    val lines = input.readLines() // Just read the whole thing instead of any sequential approach
     val (stackLines, operationLines) = splitLinesOnFirstEmptyLine(lines)
     val stacks = parseStackLines(stackLines)
 
@@ -62,19 +62,19 @@ private fun commonSolver(inputFile: File, block: (operation: MoveOperation<Char>
     return stacks.map { it.last() }.joinToString("")
 }
 
-fun solver05a(inputFile: File): String {
+fun solver05a(input: Reader): String {
     fun <T> sequentialMove(operation: MoveOperation<T>) {
         with(operation) {
             repeat(count) { to.addLast(from.removeLast()) }
         }
     }
 
-    val result = commonSolver(inputFile, ::sequentialMove)
+    val result = commonSolver(input, ::sequentialMove)
     println(result)
     return result
 }
 
-fun solver05b(inputFile: File): String {
+fun solver05b(input: Reader): String {
     fun <T> stackMove(operation: MoveOperation<T>) {
         with(operation) {
             val topStack = ArrayDeque<T>()
@@ -85,7 +85,7 @@ fun solver05b(inputFile: File): String {
         }
     }
 
-    val result = commonSolver(inputFile, ::stackMove)
+    val result = commonSolver(input, ::stackMove)
     println(result)
     return result
 }

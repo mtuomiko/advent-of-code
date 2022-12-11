@@ -1,6 +1,7 @@
 package com.mtuomiko
 
-import java.io.File
+import java.io.BufferedReader
+import java.io.Reader
 
 // No polling so it's an interesting 'buffer' :P
 private class SpecializedUniqueIntBuffer(size: Int) {
@@ -20,9 +21,9 @@ private class SpecializedUniqueIntBuffer(size: Int) {
     }
 }
 
-private fun commonSolver(inputFile: File, size: Int): Int {
+private fun commonSolver(input: Reader, size: Int): Int {
     val buffer = SpecializedUniqueIntBuffer(size)
-    val reader = inputFile.bufferedReader()
+    val reader = BufferedReader(input)
 
     var index = 0
     while (true) {
@@ -45,10 +46,10 @@ private fun commonSolver(inputFile: File, size: Int): Int {
     return result
 }
 
-fun solver06a(inputFile: File): Int {
-    return commonSolver(inputFile, 4)
+fun solver06a(input: Reader): Int {
+    return commonSolver(input, 4)
 }
 
-fun solver06b(inputFile: File): Int {
-    return commonSolver(inputFile, 14)
+fun solver06b(input: Reader): Int {
+    return commonSolver(input, 14)
 }
