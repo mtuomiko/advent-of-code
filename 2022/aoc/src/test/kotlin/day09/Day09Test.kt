@@ -24,7 +24,7 @@ private class Day09Test {
         |D 10
         |L 25
         |U 20
-        """.trimIndent()
+        """.trimMargin()
 
     @Test
     fun `Part A solver works for small input`() {
