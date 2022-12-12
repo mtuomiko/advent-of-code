@@ -18,7 +18,7 @@ private class MainTest {
      * Check that the solvers can be run through the application. Doesn't check results, just that nothing explodes.
      */
     @Test
-    fun mainFunctionCompletesUsingAllSolversWithDefaultInputs() {
+    fun `Main function completes using all solvers with default inputs`() {
         commandLineArguments.forEach {
             main(arrayOf(it.first, it.second))
         }
@@ -46,6 +46,14 @@ private class MainTest {
         private const val resourcesPath = "src/main/resources/"
         private const val paddingTemplate = "%02d"
         private const val inputSubfix = "_input.txt"
+        private val day10BAnswer = listOf(
+            "###..#....###...##..####.###...##..#....",
+            "#..#.#....#..#.#..#.#....#..#.#..#.#....",
+            "#..#.#....#..#.#..#.###..###..#....#....",
+            "###..#....###..####.#....#..#.#....#....",
+            "#....#....#....#..#.#....#..#.#..#.#....",
+            "#....####.#....#..#.#....###...##..####."
+        )
 
         /**
          * Allows skipping :) Needs explicit typing for submaps to avoid conversion to a concrete result type. For
@@ -61,7 +69,9 @@ private class MainTest {
             6 to mapOf<Char, Any>('a' to 1640, 'b' to 3613),
             7 to mapOf<Char, Any>('a' to 1581595L, 'b' to 1544176L),
             8 to mapOf<Char, Any>('a' to 1812, 'b' to 315495L),
-            9 to mapOf<Char, Any>('a' to 5907),
+            9 to mapOf<Char, Any>('a' to 5907, 'b' to 2303),
+            9 to mapOf<Char, Any>('a' to 5907, 'b' to 2303),
+            10 to mapOf<Char, Any>('a' to 12560, 'b' to day10BAnswer),
         )
         private val commandLineArguments: List<Pair<String, String>> = answers.flatMap { (dayNumber, answers) ->
             val paddedDayNumber = paddingTemplate.format(dayNumber)
