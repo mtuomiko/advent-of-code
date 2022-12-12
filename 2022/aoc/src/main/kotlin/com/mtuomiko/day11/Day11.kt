@@ -2,16 +2,11 @@ package com.mtuomiko.day11
 
 import java.io.Reader
 
-const val ROUNDS = 20
 const val OLD = "old"
 const val MULTIPLY = "*"
 const val ADD = "+"
 
 class Item(var worryLevel: Long) {
-    fun relief() {
-        worryLevel /= 3
-    }
-
     fun operation(op: (Long, Long) -> Long) {
         operation(worryLevel, op)
     }
@@ -21,51 +16,81 @@ class Item(var worryLevel: Long) {
     }
 }
 
+private fun Item.perform(operation: (Item) -> Unit) {
+    operation.invoke(this)
+}
+
 class Monkey(
-    private val items: MutableList<Item>,
-    private val operation: (Item) -> Unit,
-    val selectTargetIndex: (Item) -> Int
+    val items: MutableList<Item>,
+    val operation: (Item) -> Unit,
+    val divisor: Int,
+    private val trueMonkeyIndex: Int,
+    private val falseMonkeyIndex: Int,
 ) {
     var inspectCount = 0
 
-    fun processQueue(): Pair<Item, Int>? {
+    fun getFirstItem(): Item? {
         val item = items.removeFirstOrNull() ?: return null
-
         inspectCount++
-        operation.invoke(item)
-        item.relief()
-        return Pair(item, selectTargetIndex(item))
+        return item
     }
 
-    fun receive(item: Item) {
-        items.add(item)
+    fun selectTargetIndex(item: Item): Int {
+        val divisible = (item.worryLevel % divisor) == 0L
+        return if (divisible) trueMonkeyIndex else falseMonkeyIndex
     }
 }
 
-class Game(val monkeys: List<Monkey>) {
-    fun play() {
-        repeat(ROUNDS) { round() }
+/**
+ * Steel nerves cause worry levels to divide by three! Least common multiple gives a safe upper bound for worry levels.
+ * Not having a boundary could cause overflow (relevant for part B). Conditional checks still work the same even though
+ * the worry levels wrap over after reaching the boundary (modulo leastCommonMultiple).
+ */
+class Game(val monkeys: List<Monkey>, steelNerves: Boolean) {
+    private val leastCommonMultiple = leastCommonMultiple(monkeys.map { it.divisor.toLong() })
+    private val reliefOperation = { item: Item ->
+        val worryLevelToModulo = if (steelNerves) item.worryLevel / 3 else item.worryLevel
+        item.worryLevel = worryLevelToModulo % leastCommonMultiple
+    }
+
+    fun play(rounds: Int) {
+        repeat(rounds) { round() }
     }
 
     private fun round() {
-        monkeys.forEach {
+        monkeys.forEach { monkey ->
             while (true) {
-                val itemMovement = it.processQueue() ?: break
-                val targetMonkey = monkeys.getOrNull(itemMovement.second) ?: throw Exception("Monkey not found")
-                targetMonkey.receive(itemMovement.first)
+                val item = monkey.getFirstItem() ?: break
+
+                item.perform(monkey.operation)
+                item.perform(reliefOperation)
+                val targetMonkeyIndex = monkey.selectTargetIndex(item)
+                val targetMonkey = monkeys.getOrNull(targetMonkeyIndex) ?: throw Exception("Monkey not found")
+                targetMonkey.items.add(item)
             }
         }
     }
-
 }
 
-fun parseMonkey(textInput: List<String>): Monkey {
-    val trimmedAndTokenized = textInput.map { it.trim().split(' ') }
-    val items = parseItemsLine(trimmedAndTokenized[1])
-    val operation = parseOperationLine(trimmedAndTokenized[2])
-    val selectTargetIndex = parseTestLines(trimmedAndTokenized.subList(3, 6))
+fun euclideanGCD(a: Long, b: Long): Long {
+    return if (b == 0L) a else euclideanGCD(b, a % b)
+}
 
-    return Monkey(items.toMutableList(), operation, selectTargetIndex)
+/**
+ * Doesn't even help us since default input for 8 monkeys gives the least common multiple of 9699690 which you can get
+ * by just multiplying all the divisors.
+ */
+fun leastCommonMultiple(numbers: List<Long>) = numbers.fold(1L) { a, b -> a * (b / euclideanGCD(a, b)) }
+
+fun parseMonkey(textInput: List<String>): Monkey {
+    val tokenizedLines = textInput.map { it.trim().split(' ') }
+    val items = parseItemsLine(tokenizedLines[1])
+    val operation = parseOperationLine(tokenizedLines[2])
+    val divisor = tokenizedLines[3][3].toInt()
+    val trueIndex = tokenizedLines[4][5].toInt()
+    val falseIndex = tokenizedLines[5][5].toInt()
+
+    return Monkey(items.toMutableList(), operation, divisor, trueIndex, falseIndex)
 }
 
 fun parseItemsLine(itemsLine: List<String>): List<Item> {
@@ -93,31 +118,32 @@ fun parseOperationLine(line: List<String>): (Item) -> Unit {
     }
 }
 
-fun parseTestLines(lines: List<List<String>>): (Item) -> Int {
-    val divisor = lines[0][3].toInt()
-    val trueIndex = lines[1][5].toInt()
-    val falseIndex = lines[2][5].toInt()
-
-    return { item ->
-        val divisible = (item.worryLevel % divisor) == 0L
-        if (divisible) trueIndex else falseIndex
-    }
-}
-
 fun solver11a(input: Reader): Long {
+    val rounds = 20
     val monkeySequence = input.buffered().lineSequence().chunked(7)
     val monkeys = monkeySequence.map(::parseMonkey).toList()
-    val game = Game(monkeys)
+    val game = Game(monkeys, true)
 
-    game.play()
+    game.play(rounds)
 
     val result = game.monkeys.map { it.inspectCount }.sorted().takeLast(2)
         .fold(1L) { product, value -> product * value }
 
-    println("Amount of monkey business is $result")
+    println("Amount of monkey business after $rounds rounds using steel nerves is $result")
     return result
 }
 
 fun solver11b(input: Reader): Long {
-    return 1
+    val rounds = 10000
+    val monkeySequence = input.buffered().lineSequence().chunked(7)
+    val monkeys = monkeySequence.map(::parseMonkey).toList()
+    val game = Game(monkeys, false)
+
+    game.play(rounds)
+
+    val result = game.monkeys.map { it.inspectCount }.sorted().takeLast(2)
+        .fold(1L) { product, value -> product * value }
+
+    println("Amount of monkey business after $rounds rounds without steel nerves is $result")
+    return result
 }
