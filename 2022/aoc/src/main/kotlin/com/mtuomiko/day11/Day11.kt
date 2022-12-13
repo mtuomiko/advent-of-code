@@ -72,7 +72,7 @@ class Game(val monkeys: List<Monkey>, steelNerves: Boolean) {
     }
 }
 
-fun euclideanGCD(a: Long, b: Long): Long {
+private fun euclideanGCD(a: Long, b: Long): Long {
     return if (b == 0L) a else euclideanGCD(b, a % b)
 }
 
@@ -80,7 +80,7 @@ fun euclideanGCD(a: Long, b: Long): Long {
  * Doesn't even help us since default input for 8 monkeys gives the least common multiple of 9699690 which you can get
  * by just multiplying all the divisors.
  */
-fun leastCommonMultiple(numbers: List<Long>) = numbers.fold(1L) { a, b -> a * (b / euclideanGCD(a, b)) }
+private fun leastCommonMultiple(numbers: List<Long>) = numbers.fold(1L) { a, b -> a * (b / euclideanGCD(a, b)) }
 
 fun parseMonkey(textInput: List<String>): Monkey {
     val tokenizedLines = textInput.map { it.trim().split(' ') }
