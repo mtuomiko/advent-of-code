@@ -88,7 +88,7 @@ private class MainTest {
          * Return Arguments should be:
          * <ul>
          * <li>solverFunction: KFunction1<Reader, Any> (result out is using Any since the result type varies)
-         * <li>inputF: [Reader]
+         * <li>input: [Reader]
          * <li>result: Any (like Int, Long, String)
          */
         @JvmStatic
@@ -125,10 +125,12 @@ private class MainTest {
         private fun locateClass(paddedDayNumber: String): Class<*> {
             // Start reflection on corresponding Java class because we can't reflect on top-level functions with Kotlin.
             // If not found on root, check package for corresponding day: for example package day09.
+            val className = "Day${paddedDayNumber}Kt"
             return try {
-                Class.forName("${classPathPrefix}Day${paddedDayNumber}Kt")
+                Class.forName("$classPathPrefix$className")
             } catch (e: ClassNotFoundException) {
-                Class.forName("${classPathPrefix}day${paddedDayNumber}.Day${paddedDayNumber}Kt")
+                val packagePrefix = "day${paddedDayNumber}."
+                Class.forName("$classPathPrefix$packagePrefix$className")
             }
         }
     }
