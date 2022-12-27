@@ -8,6 +8,8 @@ import com.mtuomiko.day11.solver11a
 import com.mtuomiko.day11.solver11b
 import com.mtuomiko.day12.solver12a
 import com.mtuomiko.day12.solver12b
+import com.mtuomiko.day13.solver13a
+import com.mtuomiko.day13.solver13b
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
@@ -25,6 +27,7 @@ val availableSolvers = mapOf(
     "10a" to ::solver10a, "10b" to ::solver10b,
     "11a" to ::solver11a, "11b" to ::solver11b,
     "12a" to ::solver12a, "12b" to ::solver12b,
+    "13a" to ::solver13a, "13b" to ::solver13b,
 )
 
 const val resourcesPath = "src/main/resources/"
