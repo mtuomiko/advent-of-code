@@ -39,4 +39,13 @@ class Day13Test {
 
         Assertions.assertThat(result).isEqualTo(13)
     }
+
+    @Test
+    fun `Part B solver returns correct answer for test input`() {
+        val reader = StringReader(testInput)
+
+        val result = solver13b(reader)
+
+        Assertions.assertThat(result).isEqualTo(140)
+    }
 }
