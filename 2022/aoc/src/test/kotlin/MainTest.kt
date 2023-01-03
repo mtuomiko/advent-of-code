@@ -75,7 +75,8 @@ private class MainTest {
             11 to mapOf<Char, Any>('a' to 58794L, 'b' to 20151213744L),
             12 to mapOf<Char, Any>('a' to 497, 'b' to 492),
             13 to mapOf<Char, Any>('a' to 6240, 'b' to 23142),
-            14 to mapOf<Char, Any>('a' to 793, 'b' to 24166)
+            14 to mapOf<Char, Any>('a' to 793, 'b' to 24166),
+            15 to mapOf<Char, Any>('a' to 4737567, 'b' to 13267474686239L),
         )
         private val commandLineArguments: List<Pair<String, String>> = answers.flatMap { (dayNumber, answers) ->
             val paddedDayNumber = paddingTemplate.format(dayNumber)
