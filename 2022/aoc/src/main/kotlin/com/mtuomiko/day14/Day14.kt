@@ -125,6 +125,7 @@ fun solver14a(input: Reader): Int {
 }
 
 fun solver14b(input: Reader): Int {
+    // Just using a common method signature, x parameters not relevant for b-solver. TODO: refactor?
     fun gridCreator(_maxX: Int, _minX: Int, maxY: Int): Grid {
         // Reserve needed grid near 0,0
         val ySize = maxY + 3 // extra for zero indices + floor space in y axis

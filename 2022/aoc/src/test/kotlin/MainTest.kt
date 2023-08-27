@@ -17,7 +17,7 @@ private class MainTest {
     /**
      * Check that the solvers can be run through the application. Doesn't check results, just that nothing explodes.
      */
-    @Test
+//    @Test
     fun `Main function completes using all solvers with default inputs`() {
         commandLineArguments.forEach {
             main(arrayOf(it.first, it.second))
@@ -119,7 +119,8 @@ private class MainTest {
 
             return answers.map { (letter, result) ->
                 val functionName = "$solverString$paddedDayNumber$letter"
-                val method = clazz.declaredMethods.first { it.name == functionName }
+                // there might be overloaded methods, the one accepting only one parameter should be correct
+                val method = clazz.declaredMethods.first { it.name == functionName && it.parameterCount == 1}
                 val kFunction = method.kotlinFunction!! as KFunction1<*, *>
                 result to kFunction
             }

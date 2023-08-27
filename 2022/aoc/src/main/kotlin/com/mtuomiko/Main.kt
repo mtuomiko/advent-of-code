@@ -40,7 +40,7 @@ const val resourcesPath = "src/main/resources/"
 
 fun main(args: Array<String>) {
     if (args.size != 2) {
-        throw Exception("give solver and input as arguments")
+        throw IllegalArgumentException("give solver and input as arguments")
     }
     val solverString = args[0]
     val inputFilename = args[1]
@@ -48,7 +48,7 @@ fun main(args: Array<String>) {
     val file = File(resourcesPath + inputFilename)
     val inputReader = InputStreamReader(FileInputStream(file), Charsets.UTF_8)
 
-    val solver = availableSolvers[solverString] ?: throw Exception("give valid solver")
+    val solver = availableSolvers[solverString] ?: throw IllegalArgumentException("give valid solver")
 
     val result = solver(inputReader)
     println("Solver $solverString: $result")
